@@ -154,19 +154,16 @@ def _primeSieve(n: int) -> np.ndarray:
     if n < 2:
         return np.array([])
 
-    # Create boolean array "is_prime[0..n]" and initialize
-    # all entries it as true
+    # Boolean array 
     is_prime = np.ones(n + 1, dtype=bool)
     is_prime[0] = is_prime[1] = False
 
-    # Use vectorized operations for marking multiples
+    # Vectorized operations for marking multiples
     for i in range(2, int(np.sqrt(n)) + 1):
         if is_prime[i]:
-            # Instead of using a while loop, create an array of multiples
-            # and mark them all at once
+            # slicing and marking the multiples
             is_prime[i * i :: i] = False
 
-    # Return the prime numbers using boolean indexing, converted to Python list
     return np.nonzero(is_prime)[0]
 
 
