@@ -11,7 +11,7 @@ using **NumPy** and building  the test coverage.
 ### 2. **Clone Your Fork**
    - Clone your forked repository to your local machine:
      ```
-     git clone https://github.com/effaf/project_euler_utils.git
+     git clone https://github.com/juliebryan/project_euler_aid.git
      cd your-repo-name
      ```
 
@@ -56,4 +56,4 @@ using **NumPy** and building  the test coverage.
 
 Appreciate your contributions to make this package better!
 
-Email - shlok.kothari@gmail.com (for any concerns)
+Email - juliebryan998@gmail.com

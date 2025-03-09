@@ -1,15 +1,15 @@
-## project-euler-utils
+## project-euler-aid
 
-Hi, I made this package to provide utility functions for solving project euler problems. It can be extended to solve math problems
+Hi, I made this package to provide utility functions for solving project euler problems. It can be extended to solve other math problems
 
 Back story - It has been some time I have been solving math problems from different available problem sets. 
-A lot of these functions were frequently needed to solve the problems. I compiled the ones frequently used and decided to publish them. 
+A lot of these functions were often needed to solve the problems. I compiled the ones frequently used and decided to publish them. 
 
 
 ## Installation
 
 ```
-pip install project-euler-utils
+pip install project-euler-aid
 ```
 
 ## Usage
@@ -17,15 +17,28 @@ pip install project-euler-utils
 Import the package
 
 ```
-import project_euler_utils
+import project_euler_aid
 ```
+```
+from project_euler_aid import get_nth_prime_number
 
+print(get_nth_prime_number(30)) # print the 30th prime number
+```
 ## Contributing
 
-I will massively appreciate your contributions in developing this package alongside.
-Please refer to CONTRIBUTING.md for the details
+I will massively appreciate your contributions in developing this package alongside. Please refer to CONTRIBUTING.md for the same
 
 
-- Email - shlok.kothari@gmail.com
+## Connect with me
+Email - juliebryan998@gmail.com
 
-or open an issue on GitHub if you encounter any problems or have any suggestions
+Open an issue on GitHub if you encounter any problems or have any suggestions
+
+## License 
+This project is licensed under the **MIT License**.  
+
+Thanks for visiting the repo!
+
+<p align="center">
+  <i>If you found this package helpful, please give it a star and share it with others!</i>
+</p>

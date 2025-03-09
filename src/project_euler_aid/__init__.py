@@ -2,11 +2,11 @@
 Utility functions for math problems
 ====================================
 
-project-euler is a package providing utility functions for solving math problems using python
+project-euler-aid is a package providing utility functions for solving math problems using python
 
 """
 
-from .project_euler_utils import (
+from .project_euler_aid import (
     get_total_positive_divisors,
     get_nth_prime,
     sum_of_primes_until_n,
