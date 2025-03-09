@@ -20,4 +20,5 @@ from .project_euler_aid import (
     square_sum_difference,
     get_max_product_of_n_adjacent_digits,
     get_nth_triangle_number,
+    get_nth_prime_numpy
 )

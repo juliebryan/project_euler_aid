@@ -1,5 +1,7 @@
 from collections import defaultdict
 from .helpers import Collatz
+from typing import List
+import numpy as np
 
 # Problem 2 (Fibonacci)
 
@@ -8,7 +10,7 @@ def sum_of_even_fibonacci_terms(limit: int) -> int:
     """
     Sum of even terms of a fibonacci sequence
 
-    Sum is performed upto the limit provided
+    Sum is performed upto the limit argument
 
     Parameters
     ----------
@@ -135,35 +137,52 @@ What is the smallest positive number that is evenly divisible by all of the numb
 """
 
 
-def getPrime_less_than_or_equal_to_n(n):
+def _primeSieve(n: int) -> np.ndarray:
     """
-    All prime numbers less than or equal to a number
+    Implements the Sieve of Eratosthenes using numpy's vectorized operations
 
     Parameters
     ----------
     n : int
-
+        Find all primes up to this number
 
     Returns
     -------
-    arr : list
-
+    np.ndarray
+        Array of prime numbers up to n
     """
-    arr = [True for _ in range(n + 1)]
-    i = 2
-    while i * i < n:
-        multiple = 2
-        while arr[i] and i * multiple <= n:
-            arr[i * multiple] = False
-            multiple += 1
-        i += 1
+    if n < 2:
+        return np.array([])
 
-    ans = []
-    for j in range(2, len(arr)):
-        if arr[j]:
-            ans.append(j)
+    # Boolean array 
+    is_prime = np.ones(n + 1, dtype=bool)
+    is_prime[0] = is_prime[1] = False
 
-    return ans
+    # Vectorized operations for marking multiples
+    for i in range(2, int(np.sqrt(n)) + 1):
+        if is_prime[i]:
+            # slicing and marking the multiples
+            is_prime[i * i :: i] = False
+
+    return np.nonzero(is_prime)[0]
+
+
+def getPrime_less_than_or_equal_to_n(n):
+    """
+    Implements the Sieve of Eratosthenes using numpy's vectorized operations
+
+    Parameters
+    ----------
+    n : int
+        Find all primes up to this number
+
+    Returns
+    -------
+    List[int]
+        List of prime numbers up to n
+    """
+
+    return _primeSieve(n).tolist()
 
 
 def smallest_positive_number_divisible_by_all_numbers_till_n(n):
@@ -263,7 +282,48 @@ What is the 10001st prime number?
 """
 
 
-def get_nth_prime(n):
+
+def _checkPrime_numpy(primes, n):
+    """
+    Check if a number is prime by testing divisibility with known primes
+
+    Parameters
+    ----------
+    primes : list or numpy.ndarray
+        List of known prime numbers to test against
+    n : int
+        Number to test for primality
+
+    Returns
+    -------
+    bool
+        True if n is prime, False otherwise
+    """
+    if not primes:  # If primes list is empty
+        return n > 1
+
+    primes_arr = np.array(primes)
+
+    max_check = int(np.sqrt(n)) + 1
+    primes_arr = primes_arr[primes_arr <= max_check]
+
+    if len(primes_arr) == 0:
+        return True
+
+    remainders = n % primes_arr
+
+    return not np.any(remainders == 0)
+
+
+def _checkPrime(primes, n):
+    for i in primes:
+        if n % i == 0:
+            return False
+
+    return True
+
+# Memory efficient function
+def get_nth_prime_memory_efficient(n):
     """
     Get the nth prime number
 
@@ -278,12 +338,31 @@ def get_nth_prime(n):
 
     """
 
-    def _checkPrime(primes, n):
-        for i in primes:
-            if n % i == 0:
-                return False
+    count = 0
+    primes = []
+    counter = 2
+    while count != n:
+        if _checkPrime_numpy(primes, counter):
+            primes.append(counter)
+            count += 1
+        counter += 1
+    return counter - 1
 
-        return True
+
+def get_nth_prime_time_efficient(n):
+    """
+    Get the nth prime number
+
+    Parameters
+    ----------
+    n : int
+
+
+    Returns
+    -------
+    prime : int
+
+    """
 
     count = 0
     primes = []
@@ -374,7 +453,7 @@ def search_sum_of_pythogorean_triple(s):
     return -1
 
 
-def sum_of_primes_until_n(n):
+def sum_of_primes_until_n(n:int) -> int:
     """
     Sum of all prime numbers until n
 
@@ -389,18 +468,10 @@ def sum_of_primes_until_n(n):
 
     """
 
-    sieve = [True for _ in range(n)]
-    sum_prime = 0
-    i = 2
-    while i * i < n:
-        counter = 2
-        while i * counter < n:
-            sieve[i * counter] = False
-            counter += 1
-        i += 1
+    primes = getPrime_less_than_or_equal_to_n(n)
 
-    for index in range(2, len(sieve)):
-        if sieve[index]:
+    for index in range(2, len(primes)):
+        if primes[index]:
             sum_prime += index
 
     return sum_prime
